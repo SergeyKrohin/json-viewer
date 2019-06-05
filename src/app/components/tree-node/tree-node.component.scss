@@ -1,0 +1,13 @@
+.tree-node {
+	margin-left: 25px;
+	&.first-node {
+		margin-left: 0;
+		& > .field-name {
+			display: none;
+		}
+	}
+	.field-name {
+		margin-right: 10px;
+		vertical-align: 2px;
+	}
+}

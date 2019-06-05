@@ -1,0 +1,30 @@
+<div class="tree-node" [ngClass]="{'first-node':!fieldName}">
+	<span class="field-name">{{fieldName}}:</span><toggle-box (onToggle)="toggleNode($event)"></toggle-box>
+	<span *ngIf="showFields">
+		<div *ngFor="let field of objectKeys(sourceObj)">
+			<span [ngSwitch]="typeOf(sourceObj[field])">
+
+				<span *ngSwitchCase="'string'">
+					string
+				</span>
+				
+				<span *ngSwitchCase="'number'">
+					number
+				</span>
+				
+				<span *ngSwitchCase="'object'">
+					<tree-node [fieldName]=[field] [sourceObj]="sourceObj[field]"></tree-node>
+				</span>
+				
+				<span *ngSwitchCase="'boolean'">
+					boolean
+				</span>
+				
+				<span *ngSwitchDefault>
+					default
+				</span>
+
+			</span>
+		</div>
+	</span>
+</div>
