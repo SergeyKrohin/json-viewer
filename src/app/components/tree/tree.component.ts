@@ -18,7 +18,7 @@ export class TreeComponent{
 					"g": "A string."
 				}
 			}
-		}/*,
+		},
 		"h": "1",
 		"i": true,
 		"j": {
@@ -36,6 +36,6 @@ export class TreeComponent{
 					}
 				}
 			}
-		}*/
+		}
 	};
 }

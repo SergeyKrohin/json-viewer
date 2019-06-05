@@ -1,15 +1,15 @@
 <div class="tree-node" [ngClass]="{'first-node':!fieldName}">
-	<span class="field-name">{{fieldName}}:</span><toggle-box (onToggle)="toggleNode($event)"></toggle-box>
+	<span class="field-name">{{fieldName}} :</span><toggle-box (onToggle)="toggleNode($event)"></toggle-box>
 	<span *ngIf="showFields">
 		<div *ngFor="let field of objectKeys(sourceObj)">
 			<span [ngSwitch]="typeOf(sourceObj[field])">
 
 				<span *ngSwitchCase="'string'">
-					string
+					<input type="text" [(ngModel)]="sourceObj[field]" />
 				</span>
 				
 				<span *ngSwitchCase="'number'">
-					number
+					<input type="number" [(ngModel)]="sourceObj[field]" />
 				</span>
 				
 				<span *ngSwitchCase="'object'">
@@ -17,7 +17,7 @@
 				</span>
 				
 				<span *ngSwitchCase="'boolean'">
-					boolean
+					<input type="checkbox" [(ngModel)]="sourceObj[field]"/>
 				</span>
 				
 				<span *ngSwitchDefault>
