@@ -1,0 +1,27 @@
+<span class="field-name">{{fieldName}} :</span>
+<span class="field" [ngSwitch]="typeOf(fieldValue)">
+
+	<span *ngSwitchCase="'string'">
+		<input  type="text" 
+				[(ngModel)]="fieldValue" 
+				(ngModelChange)="calcInputWidth($event)"  
+				[ngStyle]="{'width': fieldWidth + 'px'}"/>
+	</span>
+	
+	<span *ngSwitchCase="'number'">
+		<input  type="number" 
+				[ngModel]="fieldValue" 
+				(ngModelChange)="calcInputWidth($event)"  
+				[ngStyle]="{'width': fieldWidth + 'px'}" />
+	</span>
+	
+	<span *ngSwitchCase="'boolean'">
+		<input  type="checkbox" 
+				[ngModel]="fieldValue"/>
+	</span>
+	
+	<span *ngSwitchCase="'object'">
+		<tree-node [sourceObj]="fieldValue"></tree-node>
+	</span>
+
+</span>
