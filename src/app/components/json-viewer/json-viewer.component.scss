@@ -1,8 +1,28 @@
+$outer_spacing: 25px;
+$inner_spacing: 20px;
+
 .dashboard {
-	height: 100%;
-	padding: 20px;
-	background-size: cover;
-	section {
-		margin-bottom: 20px;
+	height: calc(100% - #{$outer_spacing});
+	padding: $outer_spacing;
+	.section {
+		width: calc(50% - #{$outer_spacing/2});
+		display: inline-block;
+		height: inherit;
+		vertical-align: top;
+		border: 1px solid #efefef;
+		border-radius: 2px;
+		box-sizing: border-box;
+		textarea {
+			height: 100%;
+			border: 0;
+			width: 100%;
+			outline: none;
+			padding: $inner_spacing;
+			box-sizing: border-box;
+			resize: none;
+		}
+		&.text-view {
+			margin-right: $outer_spacing;
+		}
 	}
 }

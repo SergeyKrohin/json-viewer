@@ -3,6 +3,8 @@ html, body
     height: 100%;
 	font-family: arial;
 	font-size: 17px;
+	overflow: hidden;
+	margin: 0;
 }
 input {
     line-height: 20px;
@@ -21,7 +23,7 @@ button {
     font-size: 14px;
 }
 input, button {
-	border: 1px solid rgba(0, 0 ,0, .4);
+	border: 1px solid rgba(0, 0 ,0, .3);
 	outline: none;
 }
 button:hover {
