@@ -1,10 +1,12 @@
-<div class="dashboard" style="font-size:0">
+<div class="dashboard">
+	<section class="header">
+		<!--<button (click)="parse(sourceObj)">Parse</button>-->
+	</section>
 	<section class="section text-view">
-		<textarea>{{sourceObj | json}}</textarea>
-		<!--<button>Remove</button>-->
+		<json-source (onSourceChange)="setSourceObj($event)"></json-source>
 	</section>
 	<section class="section tree-view">
-		<tree></tree>
+		<tree [treeSource]="sourceObj"></tree>
 	</section>	
 	<!--<section class="footer">
 		<button (click)="validate()">Validate</button>

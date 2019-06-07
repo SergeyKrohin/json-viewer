@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
 	selector: 'json-viewer',
@@ -6,40 +6,18 @@ import { Component } from '@angular/core';
 	styleUrls: ['./json-viewer.component.scss']
 })
 
-export class JsonViewerComponent{
-	public sourceObj = {
-		"a": "Hello, World!",
-		"x": true,
-		"b": {
-			"c": {
-				"d": {
-					"e": 123,
-					"f": true,
-					"g": "A string."
-				}
-			}
-		},
-		"h": "1",
-		"i": true,
-		"j": {
-			"k": {
-				"l": "Test!",
-				"m": true,
-				"n": false,
-				"o": {
-					"p": 987,
-					"q": 5,
-					"r": 1,
-					"s": {
-						"t": true,
-						"u": "This is where it ends."
-					}
-				}
-			}
-		}
-	};
+export class JsonViewerComponent implements OnInit{
+	
+	public sourceObj;
+	
+	public setSourceObj(src) {
+		this.sourceObj = src;
+	}
 	
 	public validate() {
 		console.log('validating..', this.sourceObj);
+	}
+	
+	ngOnInit() {
 	}
 }

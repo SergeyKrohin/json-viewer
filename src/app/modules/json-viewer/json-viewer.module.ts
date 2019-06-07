@@ -1,5 +1,6 @@
 import { JsonViewerComponent } from '../../components/json-viewer/json-viewer.component';
 import { TreeComponent } from '../../components/tree/tree.component';
+import { SourceComponent } from '../../components/source/source.component';
 import { TreeNodeComponent } from '../../components/tree-node/tree-node.component';
 import { ToggleBoxComponent } from '../../components/toggle-box/toggle-box.component';
 import { TreeFieldComponent } from '../../components/tree-field/tree-field.component';
@@ -10,7 +11,7 @@ import { FormsModule }   from '@angular/forms';
 import { JsonViewerRoutingModule } from './json-viewer-routing.module';
 
 @NgModule({
-	declarations: [JsonViewerComponent, TreeComponent, TreeNodeComponent, ToggleBoxComponent, TreeFieldComponent],
+	declarations: [JsonViewerComponent, TreeComponent, SourceComponent, TreeNodeComponent, ToggleBoxComponent, TreeFieldComponent],
 	imports: [SharedModule ,BrowserModule, FormsModule, JsonViewerRoutingModule],
 	providers: [],
 	exports: [JsonViewerComponent]

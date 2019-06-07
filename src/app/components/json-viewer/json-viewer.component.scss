@@ -1,9 +1,9 @@
 $outer_spacing: 25px;
-$inner_spacing: 20px;
 
 .dashboard {
 	height: calc(100% - #{$outer_spacing});
 	padding: $outer_spacing;
+	font-size: 0; //removes the gap between the sections
 	.section {
 		width: calc(50% - #{$outer_spacing/2});
 		display: inline-block;
@@ -12,15 +12,6 @@ $inner_spacing: 20px;
 		border: 1px solid #efefef;
 		border-radius: 2px;
 		box-sizing: border-box;
-		textarea {
-			height: 100%;
-			border: 0;
-			width: 100%;
-			outline: none;
-			padding: $inner_spacing;
-			box-sizing: border-box;
-			resize: none;
-		}
 		&.text-view {
 			margin-right: $outer_spacing;
 		}
