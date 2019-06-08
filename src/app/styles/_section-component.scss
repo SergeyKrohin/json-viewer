@@ -1,0 +1,15 @@
+$btn-margin: 10px;
+$btn-height: 24px;
+
+.section-btn {
+	margin-bottom: $btn-margin;
+	hegiht: $btn-height;
+}
+
+.section-component {
+	padding: 20px;
+	border: 1px solid #cdcdcd;
+	box-sizing: border-box;
+	height: calc(100% - (#{$btn-height} + #{$btn-margin})); 
+	padding: 20px;
+}

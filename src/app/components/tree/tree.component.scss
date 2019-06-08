@@ -1,3 +1,11 @@
+@import "../../styles/_section-component.scss";
+
+.delete-btn {
+	float: right;
+	@extend .section-btn;
+}
 .tree {
-	padding: 20px;
+	clear: both;
+	overflow: auto;
+	@extend .section-component;
 }

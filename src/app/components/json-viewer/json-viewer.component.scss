@@ -1,19 +1,19 @@
-$outer_spacing: 25px;
+$margin: 20px;
 
 .dashboard {
-	height: calc(100% - #{$outer_spacing});
-	padding: $outer_spacing;
+	padding: 10px 20px;
 	font-size: 0; //removes the gap between the sections
-	.section {
-		width: calc(50% - #{$outer_spacing/2});
-		display: inline-block;
-		height: inherit;
-		vertical-align: top;
-		border: 1px solid #efefef;
-		border-radius: 2px;
+	&, .section {
 		box-sizing: border-box;
+		height: 100%;
+	}
+	.section {
+		width: calc(50% - #{$margin/2});
+		display: inline-block;
+		vertical-align: top;
+		border-radius: 2px;
 		&.text-view {
-			margin-right: $outer_spacing;
+			margin-right: $margin;
 		}
 	}
 }

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 
 @Component({
 	selector: 'tree-field',
@@ -6,7 +6,7 @@ import { Component, Input, OnInit } from '@angular/core';
 	styleUrls: ['./tree-field.component.scss']
 })
 
-export class TreeFieldComponent implements OnInit{
+export class TreeFieldComponent implements OnChanges {
 	
 	@Input() fieldName;
 	@Input() fieldValue;
@@ -31,8 +31,12 @@ export class TreeFieldComponent implements OnInit{
 		this.fieldWidth = Math.max(minWidth, tmp.getBoundingClientRect().width + padding);
 	}
 	
-	ngOnInit() {
-		this.calcInputWidth(this.fieldValue);
+	ngOnChanges(changes: SimpleChanges) {
+		if(changes.fieldValue && ( //calculate input width only for strings or numbers
+			typeof changes.fieldValue.currentValue === 'string' || 
+			typeof changes.fieldValue.currentValue === 'number')) {
+				this.calcInputWidth(this.fieldValue);
+		}
 	}
 	
 }

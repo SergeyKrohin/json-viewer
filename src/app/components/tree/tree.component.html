@@ -1,3 +1,4 @@
-<div class="tree" *ngIf="treeSource">
-	<tree-node [sourceObj]="treeSource"></tree-node>
+<button class="delete-btn" title="Delete selected lines">Delete</button>
+<div class="tree">
+	<tree-node *ngIf="treeSource" [sourceObj]="treeSource"></tree-node>
 </div>

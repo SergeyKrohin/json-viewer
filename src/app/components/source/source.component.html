@@ -1,2 +1,2 @@
-<button (click)="format()">Format</button>
-<textarea [ngModel]="src" (ngModelChange)="onSrcChange($event)"></textarea>
+<button class="format-btn" title="Format JSON with indentation and line feeds" (click)="format()">Format</button>
+<textarea class="text-editor" [ngModel]="src" (ngModelChange)="onSrcChange($event)"></textarea>

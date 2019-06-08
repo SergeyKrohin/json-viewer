@@ -1,10 +1,12 @@
-textarea {
-	height: 100%;
-	border: 0;
+@import "../../styles/_section-component.scss";
+
+.format-btn {
+	@extend .section-btn;
+}
+.text-editor {
 	width: 100%;
 	outline: none;
-	padding: 20px;
-	box-sizing: border-box;
 	resize: none;
 	line-height: 20px;
+	@extend .section-component;
 }
