@@ -9,10 +9,11 @@ import { SharedModule } from '../shared/shared.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule }   from '@angular/forms';
 import { JsonViewerRoutingModule } from './json-viewer-routing.module';
+import { CoreModule } from '../core/core.module';
 
 @NgModule({
 	declarations: [JsonViewerComponent, TreeComponent, SourceComponent, TreeNodeComponent, ToggleBoxComponent, TreeFieldComponent],
-	imports: [SharedModule ,BrowserModule, FormsModule, JsonViewerRoutingModule],
+	imports: [SharedModule ,BrowserModule, FormsModule, JsonViewerRoutingModule, CoreModule],
 	providers: [],
 	exports: [JsonViewerComponent]
 })

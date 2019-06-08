@@ -1,4 +1,5 @@
-import { Component, Input  } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import UtilitiesService from '../../services/utilities.service';
 
 @Component({
 	selector: 'tree-node',
@@ -6,15 +7,20 @@ import { Component, Input  } from '@angular/core';
 	styleUrls: ['./tree-node.component.scss']
 })
 
-export class TreeNodeComponent {
+export class TreeNodeComponent implements OnInit {
 	
 	@Input() sourceObj;
 	
-	public objectKeys = Object.keys;
+	public fields = [];
 	public showFields = true;
+	public utils = UtilitiesService;
 
 	public toggleNode(isOpened) {
 		this.showFields = isOpened;
+	}
+	
+	ngOnInit() {
+		this.fields = Object.keys(this.sourceObj)
 	}
 	
 }

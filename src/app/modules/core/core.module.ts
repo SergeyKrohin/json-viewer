@@ -1,11 +1,10 @@
 import { NgModule } from '@angular/core';
+import UtilitiesService from '../../services/utilities.service';
 
 
 @NgModule({
-	imports: [
-		
-	],
 	providers: [
+		UtilitiesService
 	]
 })
 

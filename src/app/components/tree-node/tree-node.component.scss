@@ -1,5 +1,25 @@
 .tree-node {
 	//display: inline-block; - causes performance issues
+	.object-length:before {
+		content: '{';
+	}
+	.object-length:after {
+		content: '}';
+	}
+	.array-length:before {
+		content: '[';
+	}
+	.array-length:after {
+		content: ']';
+	}
+	[class$="-length"] {
+		font-size: 12px;
+		margin-left: 10px;
+		vertical-align: 3px;
+		&:before, &:after {
+			padding: 2px;
+		}
+	}
 	.field {
 		margin-top: 10px;
 	}
