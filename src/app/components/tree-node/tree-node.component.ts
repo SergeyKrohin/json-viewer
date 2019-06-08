@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import UtilitiesService from '../../services/utilities.service';
 
 @Component({
@@ -7,7 +7,7 @@ import UtilitiesService from '../../services/utilities.service';
 	styleUrls: ['./tree-node.component.scss']
 })
 
-export class TreeNodeComponent implements OnInit {
+export class TreeNodeComponent implements OnChanges {
 	
 	@Input() sourceObj;
 	
@@ -19,8 +19,13 @@ export class TreeNodeComponent implements OnInit {
 		this.showFields = isOpened;
 	}
 	
-	ngOnInit() {
-		this.fields = Object.keys(this.sourceObj)
+	ngOnChanges(changes: SimpleChanges) {		
+		if(changes.sourceObj) {
+			const newFields = Object.keys(changes.sourceObj.currentValue);
+			if(newFields.length !== this.fields.length) {
+				this.fields = newFields;
+			}
+		}
 	}
 	
 }

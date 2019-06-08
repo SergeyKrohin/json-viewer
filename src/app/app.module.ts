@@ -9,7 +9,6 @@ import { JsonViewerModule } from './modules/json-viewer/json-viewer.module';
   imports: [
 	JsonViewerModule
   ],
-  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
