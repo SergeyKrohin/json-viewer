@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import UtilitiesService from '../../services/utilities.service';
 
 @Component({
@@ -10,6 +10,7 @@ import UtilitiesService from '../../services/utilities.service';
 export class TreeNodeComponent implements OnChanges {
 	
 	@Input() sourceObj;
+	@Output() onNodeChange = new EventEmitter();
 	
 	public fields = [];
 	public showFields = true;
@@ -17,6 +18,11 @@ export class TreeNodeComponent implements OnChanges {
 
 	public toggleNode(isOpened) {
 		this.showFields = isOpened;
+	}
+	
+	public updateTree(node) { 
+		this.sourceObj[node.name] = node.value
+		this.onNodeChange.emit(this.sourceObj);	
 	}
 	
 	ngOnChanges(changes: SimpleChanges) {		

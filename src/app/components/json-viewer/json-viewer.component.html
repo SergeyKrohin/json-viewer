@@ -1,12 +1,12 @@
 <div class="dashboard">
 	<section class="text-view">
-		<json-source [sourceTitle]="'JSON Source'" (onSrcChange)="setSourceObj($event)"></json-source>
+		<json-source [sourceTitle]="'JSON Source'" [jsonSource]="jsonSrc" (onSourceChange)="setTreeSrc($event)"></json-source>
 	</section>
 	<section class="schema-view">
 		<json-source [sourceTitle]="'Schema'"></json-source>
 	</section>
 	<section class="tree-view">
-		<tree [treeTitle]="'Editor'" [treeSource]="sourceObj"></tree>
+		<tree [treeTitle]="'Editor'" [treeSource]="treeSrc" (onTreeChange)="setJsonSrc($event)"></tree>
 	</section>	
 	<footer class="clearfix">	
 		<button class="validate-btn" (click)="validate()">Validate</button>

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
 	selector: 'tree',
@@ -10,5 +10,10 @@ export class TreeComponent{
 
 	@Input() treeTitle;
 	@Input() treeSource;
+	@Output() onTreeChange = new EventEmitter();
+
+	public updateParent(val) {
+		this.onTreeChange.emit(val);
+	}
 	
 }

@@ -1,29 +1,32 @@
 $header-padding: 10px;
 $header-border: 1px;
-$section-btn: 24px;
-
-.section-title {
-	font-size: 18px;
-}
-
-.section-btn {
-	float: right;
-	background: ghostwhite;
-	height: $section-btn;
-}
+$header-content-height: 24px;
 
 .section-header {
     border: #{$header-border} solid #cdcdcd;
 	border-bottom: none;
 	border-radius: 4px 4px 0px 0;
     padding: $header-padding;
-	background: #b5b5b545
+	background: #b5b5b545;	
+	.section-title {
+		font-size: 18px;
+		line-height: $header-content-height;
+	}
+	.section-btn {
+		float: right;
+		background: ghostwhite;
+		height: $header-content-height;
+	}
+}
+
+.section-header, .section-btn {
+	color: #555555
 }
 
 .section-component {
 	border: 1px solid #cdcdcd;
 	box-sizing: border-box;
-	height: calc(100% - #{$header-padding * 2 + $section-btn + $header-border}); 
+	height: calc(100% - #{$header-padding * 2 + $header-content-height + $header-border}); 
 	padding: 20px;
 	font-size: 14px;
 }

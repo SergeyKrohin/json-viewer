@@ -8,14 +8,19 @@ import { Component } from '@angular/core';
 
 export class JsonViewerComponent {
 	
-	public sourceObj;
+	public treeSrc = '';
+	public jsonSrc = '';
 	
-	public setSourceObj(src) {
-		this.sourceObj = src;
+	public setTreeSrc(src) {
+		this.treeSrc = JSON.parse(src);
+	}
+	
+	public setJsonSrc(src) {
+		this.jsonSrc = JSON.stringify(src, null, 4);
 	}
 	
 	public validate() {
-		console.log('validating..', this.sourceObj);
+		console.log('validating..', this.treeSrc);
 	}
 	
 }
