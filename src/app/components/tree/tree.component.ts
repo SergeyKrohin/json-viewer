@@ -7,7 +7,8 @@ import { Component, Input } from '@angular/core';
 })
 
 export class TreeComponent{
-	
+
+	@Input() treeTitle;
 	@Input() treeSource;
 	
 }

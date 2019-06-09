@@ -1,12 +1,6 @@
 @import "../../styles/_section-component.scss";
 
-.delete-btn {
-	float: right;
-	@extend .section-btn;
-}
-.tree {
-	clear: both;
+.tree-node {
 	overflow: auto;
-	font-size: 14px;
 	@extend .section-component;
 }

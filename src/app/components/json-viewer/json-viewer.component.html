@@ -1,14 +1,14 @@
 <div class="dashboard">
-	<section class="header">
-		<!--<button (click)="parse(sourceObj)">Parse</button>-->
+	<section class="text-view">
+		<json-source [sourceTitle]="'JSON Source'" (onSrcChange)="setSourceObj($event)"></json-source>
 	</section>
-	<section class="section text-view">
-		<json-source (onSourceChange)="setSourceObj($event)"></json-source>
+	<section class="schema-view">
+		<json-source [sourceTitle]="'Schema'"></json-source>
 	</section>
-	<section class="section tree-view">
-		<tree [treeSource]="sourceObj"></tree>
+	<section class="tree-view">
+		<tree [treeTitle]="'Editor'" [treeSource]="sourceObj"></tree>
 	</section>	
-	<!--<section class="footer">
-		<button (click)="validate()">Validate</button>
-	</section>-->
+	<footer class="clearfix">	
+		<button class="validate-btn" (click)="validate()">Validate</button>
+	</footer>
 </div>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
 	selector: 'json-viewer',
@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
 	styleUrls: ['./json-viewer.component.scss']
 })
 
-export class JsonViewerComponent implements OnInit{
+export class JsonViewerComponent {
 	
 	public sourceObj;
 	
@@ -18,6 +18,4 @@ export class JsonViewerComponent implements OnInit{
 		console.log('validating..', this.sourceObj);
 	}
 	
-	ngOnInit() {
-	}
 }

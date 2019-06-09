@@ -1,4 +1,7 @@
-<button class="delete-btn" title="Delete selected lines">Delete</button>
-<div class="tree">
+<header class="section-header clearfix">
+	<span class="section-title">{{treeTitle}}</span>
+	<button class="section-btn">Delete</button>
+</header>
+<div class="tree-node">
 	<tree-node *ngIf="treeSource" [sourceObj]="treeSource"></tree-node>
 </div>

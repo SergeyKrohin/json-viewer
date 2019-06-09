@@ -8,20 +8,22 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 export class SourceComponent {
 	
+	@Input() sourceTitle;
+	@Output() onSrcChange = new EventEmitter();
+	
 	public src = '';
-	private oldVal;
 	
-	@Output() onSourceChange = new EventEmitter();
-	
-	public onSrcChange(newSrc) {
+	public onSourceChange(newSrc) {
 		if(this.src !== newSrc) {
 			this.src = newSrc;
-			this.onSourceChange.emit(JSON.parse(newSrc));	
+			this.onSrcChange.emit(JSON.parse(newSrc));	
 		}
 	}
 	
 	public format() {
-		this.src = JSON.stringify(JSON.parse(this.src), null, 4)
+		if(this.src) {
+			this.src = JSON.stringify(JSON.parse(this.src), null, 4);
+		}
 	}
 	
 	
