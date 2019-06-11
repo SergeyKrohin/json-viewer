@@ -6,12 +6,12 @@ import { TreeFieldComponent } from '../../components/tree-field/tree-field.compo
 import { NgModule } from '@angular/core';
 import { SharedModule } from '../shared/shared.module';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule }   from '@angular/forms';
+import { FormsModule, ReactiveFormsModule }   from '@angular/forms';
 import { CoreModule } from '../core/core.module';
 
 @NgModule({
 	declarations: [JsonViewerComponent, TreeComponent, SourceComponent, TreeNodeComponent, TreeFieldComponent],
-	imports: [SharedModule ,BrowserModule, FormsModule, CoreModule],
+	imports: [SharedModule ,BrowserModule, FormsModule, ReactiveFormsModule, CoreModule],
 	providers: [],
 	exports: [JsonViewerComponent]
 })

@@ -1,6 +1,9 @@
 @import "../../styles/_section-component.scss";
 
-.tree-node {
-	overflow: auto;
-	@extend .section-component;
+form {
+	height: 100%;
+	.tree-node {
+		overflow: auto;
+		@extend .section-component;
+	}
 }

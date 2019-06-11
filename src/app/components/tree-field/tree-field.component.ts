@@ -1,4 +1,5 @@
-import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, Output, OnInit, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import { FormControl } from '@angular/forms';
 
 @Component({
 	selector: 'tree-field',
@@ -6,8 +7,9 @@ import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from
 	styleUrls: ['./tree-field.component.scss']
 })
 
-export class TreeFieldComponent implements OnChanges {
+export class TreeFieldComponent implements OnChanges, OnInit {
 	
+	@Input() fieldFormGroup;
 	@Input() fieldName;
 	@Input() fieldValue;
 	@Output() onFieldChange = new EventEmitter();
@@ -36,7 +38,6 @@ export class TreeFieldComponent implements OnChanges {
 	}
 	
 	public updateNode(val) {
-		this.fieldValue = val;
 		this.onFieldChange.emit({
 			name: this.fieldName,
 			value: val
@@ -44,11 +45,26 @@ export class TreeFieldComponent implements OnChanges {
 	}
 	
 	ngOnChanges(changes: SimpleChanges) {
-		if(changes.fieldValue && ( //calculate input width only for strings or numbers
-			typeof changes.fieldValue.currentValue === 'string' || 
-			typeof changes.fieldValue.currentValue === 'number')) {
+		if(changes.fieldValue) {
+			//calculate input width only for strings or numbers
+			if(typeof changes.fieldValue.currentValue === 'string' || 
+				typeof changes.fieldValue.currentValue === 'number') {
 				this.calcInputWidth(this.fieldValue);
+			}
+			if(this.fieldFormGroup.get(this.fieldName)) {
+				this.fieldFormGroup.get(this.fieldName).setValue(this.fieldValue, {emitEvent: false});
+			}
 		}
 	}
 	
+	ngOnInit() {
+		if(this.fieldFormGroup && typeof this.fieldValue !== 'object'){
+			this.fieldFormGroup.setControl(this.fieldName, new FormControl(this.fieldValue));
+			
+			this.fieldFormGroup.get(this.fieldName).valueChanges.subscribe(val => {
+				this.calcInputWidth(val);
+				this.updateNode(val);
+			});
+		}
+	}
 }

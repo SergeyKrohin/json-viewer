@@ -1,28 +1,23 @@
 <span class="field-name">{{fieldName}} :</span>
-<span class="field" [ngSwitch]="typeOf(fieldValue)">
+<span class="field" [ngSwitch]="typeOf(fieldValue)" [formGroup]="fieldFormGroup">
 
 	<span *ngSwitchCase="'string'">
-		<input type="text" 
-				[(ngModel)]="fieldValue" 
-				(ngModelChange)="onInputChange($event)"  
-				[ngStyle]="{'width': fieldWidth + 'px'}"/>
+		<input type="text" formControlName="{{fieldName}}" [ngStyle]="{'width': fieldWidth + 'px'}"/>
+		<div class="field-error" *ngIf="fieldFormGroup.controls[fieldName].invalid">Invalid field</div>
 	</span>
 	
 	<span *ngSwitchCase="'number'">
-		<input type="number" 
-				[ngModel]="fieldValue" 
-				(ngModelChange)="onInputChange($event)"  
-				[ngStyle]="{'width': fieldWidth + 'px'}" />
+		<input type="number" formControlName="{{fieldName}}" [ngStyle]="{'width': fieldWidth + 'px'}" />
+		<div class="field-error" *ngIf="fieldFormGroup.controls[fieldName].invalid">Invalid field</div>
 	</span>
 	
 	<span *ngSwitchCase="'boolean'">
-		<input type="checkbox" 
-				[ngModel]="fieldValue" 
-				(ngModelChange)="updateNode($event)"/>
+		<input formControlName="{{fieldName}}" type="checkbox"/>
+		<div class="field-error" *ngIf="fieldFormGroup.controls[fieldName].invalid">Invalid field</div>
 	</span>
 	
 	<span *ngSwitchCase="'object'">
-		<tree-node [sourceObj]="fieldValue" (onNodeChange)="updateNode($event)"></tree-node>
+		<tree-node [nodeFormGroup]="fieldFormGroup" [sourceObj]="fieldValue" [fieldName]="fieldName" (onNodeChange)="updateNode($event)"></tree-node>
 	</span>
 
 </span>

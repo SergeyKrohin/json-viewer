@@ -1,7 +1,12 @@
-<header class="section-header clearfix">
-	<span class="section-title">{{treeTitle}}</span>
-	<button class="section-btn">Delete</button>
-</header>
-<div class="tree-node">
-	<tree-node *ngIf="treeSource" [sourceObj]="treeSource" (onNodeChange)="updateParent($event)"></tree-node>
-</div>
+<form [formGroup]="myForm">
+	<header class="section-header clearfix">
+		<span class="section-title">{{treeTitle}}</span>
+		<button class="section-btn">Delete</button>
+	</header>
+	<div class="tree-node">
+		<tree-node [nodeFormGroup]="myForm" 
+					*ngIf="treeSource" 
+					[sourceObj]="treeSource" 
+					(onNodeChange)="updateParent($event)"></tree-node>
+	</div>
+</form>

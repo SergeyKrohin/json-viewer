@@ -3,12 +3,14 @@
 		<json-source [sourceTitle]="'JSON Source'" [jsonSource]="jsonSrc" (onSourceChange)="setTreeSrc($event)"></json-source>
 	</section>
 	<section class="schema-view">
-		<json-source [sourceTitle]="'Schema'"></json-source>
+		<json-source [sourceTitle]="'JSON Schema'" (onSourceChange)="setSchema($event)"></json-source>
 	</section>
 	<section class="tree-view">
-		<tree [treeTitle]="'Editor'" [treeSource]="treeSrc" (onTreeChange)="setJsonSrc($event)"></tree>
+		<tree [treeTitle]="'Editor'" [treeSource]="treeSrc" [schema]="validateTree && treeSchema" (onTreeChange)="setJsonSrc($event)"></tree>
 	</section>	
 	<footer class="clearfix">	
-		<button class="validate-btn" (click)="validate()">Validate</button>
+		<span class="invaid-json-error-msg" *ngIf="jsonError">JSON {{jsonError}} is invalid</span>
+		<button class="validate-btn" (click)="validate()" [disabled]="!treeSrc || !treeSchema || jsonError">Validate</button>
+		<span class="validate-error-msg">Please enter a valid JSON source and schema</span>
 	</footer>
 </div>

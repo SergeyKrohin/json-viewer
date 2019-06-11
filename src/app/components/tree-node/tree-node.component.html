@@ -1,9 +1,12 @@
 <div class="tree-node">
 	<toggle-box (onToggle)="toggleNode($event)"></toggle-box> 
 	<span class="{{utils.getClass(sourceObj)}}-length">{{fields.length}}</span>
-	<span *ngIf="showFields">
+	<span *ngIf="showFields">	
 		<div class="field" *ngFor="let field of fields">
-			<tree-field [fieldName]="field" [fieldValue]="sourceObj[field]" (onFieldChange)="updateTree($event)"></tree-field>
+			<tree-field [fieldFormGroup]="nodeFormGroup[fieldName] || nodeFormGroup" 
+						[fieldName]="field" 
+						[fieldValue]="sourceObj[field]" 
+						(onFieldChange)="updateTree($event)"></tree-field>
 		</div>
 	</span>
 </div>

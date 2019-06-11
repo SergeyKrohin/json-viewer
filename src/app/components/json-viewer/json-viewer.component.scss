@@ -7,7 +7,9 @@ $btn-height: 26px;
 	overflow-y: auto;
 	box-sizing: border-box;
 	height: 100%;
-	font-size: 0; //removes the gap between the sections
+	&:not(.validate-error-message) {
+		font-size: 0; //removes the gap between the sections
+	}
 	section {
 		width: calc((100% - #{$section-margin * 2}) / 3); // 3 sections of wich 2 are with margins
 		height: calc(100% - #{$btn-height + $footer-margin}); // btn height with footer margin
@@ -18,12 +20,32 @@ $btn-height: 26px;
 	}
 	footer {
 		margin-top: $footer-margin;
+		[class$="error-msg"] {
+			color: coral;
+			line-height: $btn-height;
+			font-size: 14px;
+		}
+		.validate-error-msg {
+			float: right;
+			margin-right: $section-margin;
+			display: none;
+		}
 		.validate-btn {
 			float: right;
 			background: coral;
 			color: white;
 			height: $btn-height;
 			width: 106px;
+		}
+		
+		.validate-btn:disabled {
+			background: #717782;
+			cursor: initial;
+			&:hover {
+				& + .validate-error-msg {
+					display: inline;
+				}
+			}
 		}
 	}
 	@media screen and (max-width: 1080px) {
