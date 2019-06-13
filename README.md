@@ -34,3 +34,4 @@ I used the latest version of angular cli at the time - 7.3.9
   - Types - because of the lack of time, not all the app is covered with types.
   - Refactoring - some parts of the app, especially the setValidators method in tree component need refactoring or to be splited in to smaller more readable parts
  -  Performance - I have implemented this app in a very dymic way, where all parts are instantly updated without much considiration on the performance. In a more realistic application much more consideration should be made, to prevent performance issues
+ -  Bugs And Tests - There are probably some bugs that are not yet addressed and also the app should be covered with unit tests to insure for more stable code
