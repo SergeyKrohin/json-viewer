@@ -8,8 +8,8 @@ I used the latest version of angular cli at the time - 7.3.9
 # Description 
 
  - A JSON editor/validator app. It has 3 sections for JSON source, JSON schema and Tree editor. Source and Tree sections are dynamically updated when the user inserts the data. After the validation button is pressed, the the app will dynamically check if the source is valid according to provided schema when the user enters the data.
-- The main part of the app is the tree, it consists of 3 parts; Tree, TreeNode and TreeField. The tree uses angular's reactive forms to   implement the validation. When the tree is rendered, it dynamicly builds a form structure using nested FormGroups and FormControls.
-  Then when the validation button is pressed, the tree will go through the provided schema, it will also hold a reference to a specific level in the form structure and dynamicly add Validators to the specific form controls where needed.
+- The main part of the app is the tree, it consists of 3 parts; Tree, TreeNode and TreeField. The tree uses angular's reactive forms to   implement the validation. When the tree is rendered or updated, it dynamically builds a form structure using nested FormGroups and FormControls.
+  Then when the validation button is pressed, the tree will go through the provided schema, it will also hold a reference to a specific level in the form structure and dynamically add Validators to the specific form controls where needed.
 - I is a responsive app for web, tablet and mobile screen.
 - Works in Chrome, IE 11 + and Firefox browsers
 
