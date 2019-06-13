@@ -1,5 +1,4 @@
 .tree-node {
-	//display: inline-block; - causes performance issues
 	.object-length:before {
 		content: '{';
 	}
@@ -20,7 +19,7 @@
 			padding: 2px;
 		}
 	}
-	.field {
+	.field-wrapper {
 		margin-top: 10px;
 	}
 }

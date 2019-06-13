@@ -8,18 +8,19 @@ import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from
 
 export class SourceComponent implements OnChanges {
 	
-	@Input() jsonSource = '';
-	@Input() sourceTitle;
-	@Output() onSourceChange = new EventEmitter();
+	@Input() jsonSource: string = '';
+	@Input() sourceTitle: string;
+	@Input() invalidSrc: boolean;
+	@Output() onSourceChange: EventEmitter<string> = new EventEmitter();
 	
-	public setSource(newSrc) {
-		if(this.jsonSource !== newSrc) {
+	public setSource(newSrc: string) {
+		if(newSrc !== this.jsonSource) {
 			this.jsonSource = newSrc;
 			this.onSourceChange.emit(newSrc);	
 		}
 	}
 	
-	public format(val) {
+	public format(val: string) {
 		if(val) {
 			this.jsonSource = JSON.stringify(JSON.parse(val), null, 4);
 		}

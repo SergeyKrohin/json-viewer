@@ -1,5 +1,5 @@
-import { Component, Input, Output, OnInit, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges, forwardRef } from '@angular/core';
+import { FormControl,NgForm, ControlContainer, FormGroupDirective } from '@angular/forms';
 
 @Component({
 	selector: 'tree-field',
@@ -7,9 +7,9 @@ import { FormControl } from '@angular/forms';
 	styleUrls: ['./tree-field.component.scss']
 })
 
-export class TreeFieldComponent implements OnChanges, OnInit {
+export class TreeFieldComponent implements OnChanges {
 	
-	@Input() fieldFormGroup;
+	@Input() nodeFormGroup;
 	@Input() fieldName;
 	@Input() fieldValue;
 	@Output() onFieldChange = new EventEmitter();
@@ -33,7 +33,7 @@ export class TreeFieldComponent implements OnChanges, OnInit {
 			tmp.id = "input-width-calc-helper";	
 			document.body.appendChild(tmp);
 		}
-        tmp.innerHTML = value.toString().replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+        tmp.innerHTML = value ? value.toString() : '';
 		this.fieldWidth = Math.max(minWidth, tmp.getBoundingClientRect().width + padding);
 	}
 	
@@ -45,26 +45,25 @@ export class TreeFieldComponent implements OnChanges, OnInit {
 	}
 	
 	ngOnChanges(changes: SimpleChanges) {
-		if(changes.fieldValue) {
+		if(changes.fieldValue && changes.fieldValue.currentValue) {
 			//calculate input width only for strings or numbers
 			if(typeof changes.fieldValue.currentValue === 'string' || 
 				typeof changes.fieldValue.currentValue === 'number') {
 				this.calcInputWidth(this.fieldValue);
 			}
-			if(this.fieldFormGroup.get(this.fieldName)) {
-				this.fieldFormGroup.get(this.fieldName).setValue(this.fieldValue, {emitEvent: false});
+			if(this.nodeFormGroup.get(this.fieldName)) {
+				this.nodeFormGroup.get(this.fieldName).setValue(this.fieldValue, {emitEvent: false});
+			}
+		}
+		if(changes.nodeFormGroup) {
+			if(this.nodeFormGroup && typeof this.fieldValue !== 'object'){
+				this.nodeFormGroup.setControl(this.fieldName, new FormControl(this.fieldValue));
+				this.nodeFormGroup.get(this.fieldName).valueChanges.subscribe(val => {
+					this.calcInputWidth(val);
+					this.updateNode(val);
+				});
 			}
 		}
 	}
-	
-	ngOnInit() {
-		if(this.fieldFormGroup && typeof this.fieldValue !== 'object'){
-			this.fieldFormGroup.setControl(this.fieldName, new FormControl(this.fieldValue));
-			
-			this.fieldFormGroup.get(this.fieldName).valueChanges.subscribe(val => {
-				this.calcInputWidth(val);
-				this.updateNode(val);
-			});
-		}
-	}
+
 }

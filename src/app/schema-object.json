@@ -1,7 +1,0 @@
-{
-	"a": "Hello, World!",
-	"b": {
-		"minimalLength": 2,
-		"maximalLength": 8
-	}
-}

@@ -1,5 +1,7 @@
 import { Component, Input, OnChanges, Output, EventEmitter, SimpleChanges } from '@angular/core';
-import { FormGroup, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators,FormBuilder, AbstractControl } from '@angular/forms';
+import { ContainedInList } from '../../validators/contained-in-list.validator';
+import UtilitiesService from '../../services/utilities.service';
 
 @Component({
 	selector: 'tree',
@@ -14,20 +16,17 @@ export class TreeComponent implements OnChanges {
 	@Input() treeSource;
 	@Output() onTreeChange = new EventEmitter();
 	
-	public myForm = new FormGroup({});
+	public treeFormGroup = new FormGroup({});
+	public utils = UtilitiesService;
+	public formValidated = false;
 
 	public updateParent(val) {
 		this.onTreeChange.emit(val);
 	}
 	
 	private getValidator(propName, propVal) {
-		
 		let validator;
-		
 		switch(propName) {
-			case 'readonly':
-				validator = null;
-			break;
 			case 'minimalLength':
 				validator = Validators.minLength(propVal);
 			break;
@@ -41,40 +40,43 @@ export class TreeComponent implements OnChanges {
 				validator = Validators.max(propVal);
 			break;
 			case 'values':
-				validator = null;
+				validator = ContainedInList(propVal);
 			break;
 			default:
 				validator = null;
 		}
-		
 		return validator;
-		
 	}
 	
-	private setValidators(schema) {
-		let formGroup:any = {
-			ref: this.myForm,
-			validators: [],
-			fieldName: ''
-		};
+	private setValidators(schema) { // TODO: refactor this function of break it in to smaller parts
+		schema.absControl = {ref: this.treeFormGroup, validators: []};
 		const setGroupValidators = (schema) => {
 			Object.keys(schema).forEach((field, index, list) => {
-				if(typeof schema[field] === 'object') {
-					formGroup = {
-						ref: formGroup.ref.controls[field],
-						validators: [],
-						fieldName: field
+				if(field !== 'absControl'){
+					if(this.utils.getClass(schema[field]) === 'object') {
+						const controls = schema.absControl.ref.controls;
+						if(!controls || !controls[field]) {
+							console.log('Shema does not mach the source');
+							return;
+						}
+						schema[field].absControl = {ref: controls[field], validators: []};
+						setGroupValidators(schema[field]);
+					} else {
+						let validator = this.getValidator(field, schema[field]);
+						if(validator) {
+							schema.absControl.validators.push(validator);
+						} else if(field === 'readonly'){
+							if(schema[field] === true){
+								schema.absControl.ref.disable({emitEvent: false});
+							} else {
+								schema.absControl.ref.enable({emitEvent: false});
+							}
+						}
 					}
-					setGroupValidators(schema[field]);
-				} else {
-					let validator = this.getValidator(field, schema[field]);
-					if(validator) {
-						formGroup.validators.push(validator);
+					if(index === list.length-2 && schema.absControl.validators.length) {
+						schema.absControl.ref.setValidators(schema.absControl.validators);
+						schema.absControl.ref.updateValueAndValidity({emitEvent: false})
 					}
-				}
-				if(index === list.length-1 && formGroup.validators.length) {
-					formGroup.ref.setValidators(formGroup.validators);
-					formGroup.ref.updateValueAndValidity({emitEvent: false})
 				}
 			});
 		}
@@ -82,8 +84,16 @@ export class TreeComponent implements OnChanges {
 	}
 	
 	ngOnChanges(changes: SimpleChanges) {
-		if(changes.schema && !changes.schema.firstChange) {
-			this.setValidators(this.schema);	
+		if(changes.schema && changes.schema.currentValue && !changes.schema.firstChange) {
+			this.setValidators(this.schema);
+			this.formValidated = true;
+		}
+		if(changes.treeSource) {
+			this.treeFormGroup = new FormGroup({});
+			this.treeSource = changes.treeSource.currentValue;
+			if(this.formValidated) {
+				this.setValidators(this.schema);
+			}
 		}
 	}
 	

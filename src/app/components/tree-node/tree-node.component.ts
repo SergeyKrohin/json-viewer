@@ -1,6 +1,6 @@
-import { Component, Input, Output, OnInit, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import UtilitiesService from '../../services/utilities.service';
-import { FormGroup } from '@angular/forms';
+import { NG_VALUE_ACCESSOR, FormGroup,ControlContainer, FormGroupDirective } from '@angular/forms';
 
 @Component({
 	selector: 'tree-node',
@@ -8,10 +8,10 @@ import { FormGroup } from '@angular/forms';
 	styleUrls: ['./tree-node.component.scss']
 })
 
-export class TreeNodeComponent implements OnChanges, OnInit {
+export class TreeNodeComponent implements OnChanges {
 	
 	@Input() fieldName;
-	@Input() nodeFormGroup;
+	@Input() parentFormGroup;
 	@Input() sourceObj;
 	@Output() onNodeChange = new EventEmitter();
 	
@@ -27,20 +27,18 @@ export class TreeNodeComponent implements OnChanges, OnInit {
 		this.sourceObj[node.name] = node.value
 		this.onNodeChange.emit(this.sourceObj);	
 	}
-	
+
 	ngOnChanges(changes: SimpleChanges) {
-		if(changes.sourceObj) {
+		if(changes.sourceObj && changes.sourceObj.currentValue) {
 			const newFields = Object.keys(changes.sourceObj.currentValue);
 			if(newFields.length !== this.fields.length) {
 				this.fields = newFields;
 			}
 		}
-
-	}
-	
-	ngOnInit() {
-		if(this.nodeFormGroup && this.fieldName) {
-			this.nodeFormGroup[this.fieldName] = new FormGroup({});
+		if(changes.parentFormGroup){		
+			if(this.parentFormGroup && this.fieldName) {
+				this.parentFormGroup.addControl(this.fieldName, new FormGroup({}));
+			}
 		}
 	}
 	

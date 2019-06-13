@@ -11,11 +11,14 @@ $btn-height: 26px;
 		font-size: 0; //removes the gap between the sections
 	}
 	section {
-		width: calc((100% - #{$section-margin * 2}) / 3); // 3 sections of wich 2 are with margins
+		width: calc(((100% - #{$section-margin * 2}) / 3) - 1px); // 3 sections of wich 2 are with margins ( - 1px because of the IE 11.. )
 		height: calc(100% - #{$btn-height + $footer-margin}); // btn height with footer margin
 		display: inline-block;
 		&.text-view, &.schema-view {
 			margin-right: $section-margin;
+		}
+		&.tree-view {
+			vertical-align: top;
 		}
 	}
 	footer {
@@ -35,7 +38,7 @@ $btn-height: 26px;
 			background: coral;
 			color: white;
 			height: $btn-height;
-			width: 106px;
+			width: 130px;
 		}
 		
 		.validate-btn:disabled {
@@ -61,7 +64,6 @@ $btn-height: 26px;
 				width: 100%;
 			}	
 		}
-
 	}
 	@media screen and (max-width: 720px) {
 		section{
@@ -72,6 +74,5 @@ $btn-height: 26px;
 				margin-bottom: $section-margin;
 			}
 		}
-	}
-	
+	}	
 }

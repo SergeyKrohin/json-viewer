@@ -17,6 +17,11 @@ $header-content-height: 24px;
 		background: ghostwhite;
 		height: $header-content-height;
 	}
+	.section-btn:disabled {
+		background: #717782;
+		cursor: initial;
+		color: white;
+	}
 }
 
 .section-header, .section-btn {
