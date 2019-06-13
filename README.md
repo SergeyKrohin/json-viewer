@@ -7,9 +7,9 @@ I used the latest version of angular cli at the time - 7.3.9
 
 # Description 
 
- - A JSON editor/validator app. It has 3 sections for JSON source, JSON schema and tree editor. All the sections are dynamically updated when the user inserts the data. After the validation button is pressed, the the app will all so dynamically check if the source is valid when the user unters the data.
-- I is a responsive app to fit web, tablet and mobile screen.
-- Works in Chrome, IE 11 + and Firefox browsers
+ - A JSON editor/validator app. It has 3 sections for JSON source, JSON schema and tree editor. All the sections are dynamically updated when the user inserts the data. After the validation button is pressed, the the app will dynamically check if the source is valid when the user unters the data.
+- I is a responsive app for web, tablet and mobile screen.
+- Works and looks good in Chrome, IE 11 + and Firefox browsers
 
 # App structure
 
@@ -24,8 +24,8 @@ I used the latest version of angular cli at the time - 7.3.9
     -   SourceComponent - an input for the JSON source. It dynamically updates the tree fields when the text is inserted. It also has format button.
     -  TreeComponent - a dynamic JSON editor. It receivet the parsed JSON and displays it's fields by type. It also updates the JSON source section when the text or other data type in inserted.
     - TreeNode - the node of the tree that can hide or expand itself. It loops over the given fields and uses the TreeField component to render the fields
- - TreeField - renders tree field according to the provided type: string, number, boolean, object, array. In case on an object or array the TreeNode will be used in the recursive way, to render the inner fields on the tree.
- - ToggleBoxComponent - a shared component used by TreeNode to hide or expand the TreeNode
+   - TreeField - renders tree field according to the provided type: string, number, boolean, object, array. In case on an object or array the TreeNode will be used in the recursive way, to render the inner fields on the tree.
+   - ToggleBoxComponent - a shared component used by TreeNode to hide or expand the TreeNode
  - Services
     -  UtilitiesService - a service that holds static helper functions
 - Styles - app has a shared _section-component.scss file to share the same stylings for the sections
