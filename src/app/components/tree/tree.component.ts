@@ -77,6 +77,8 @@ export class TreeComponent implements OnChanges {
 						schema.absControl.ref.setValidators(schema.absControl.validators);
 						schema.absControl.ref.updateValueAndValidity({emitEvent: false})
 					}
+				} else {
+					delete schema.absControl;
 				}
 			});
 		}
