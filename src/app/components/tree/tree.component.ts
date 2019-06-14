@@ -89,7 +89,6 @@ export class TreeComponent implements OnChanges {
 			this.formValidated = true;
 		}
 		if(changes.treeSource) {
-			this.treeFormGroup = new FormGroup({});
 			this.treeSource = changes.treeSource.currentValue;
 			if(this.formValidated) {
 				this.setValidators(this.schema);
