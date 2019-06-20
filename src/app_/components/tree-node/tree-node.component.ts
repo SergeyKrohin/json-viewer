@@ -35,9 +35,8 @@ export class TreeNodeComponent implements OnChanges {
 				this.fields = newFields;
 			}
 		}
-		if(changes.parentFormGroup && changes.parentFormGroup.currentValue){	
-			// it there is no field name, it meant that it is the root node
-			if(this.fieldName) {
+		if(changes.parentFormGroup){		
+			if(this.parentFormGroup && this.fieldName) {
 				this.parentFormGroup.addControl(this.fieldName, new FormGroup({}));
 			}
 		}

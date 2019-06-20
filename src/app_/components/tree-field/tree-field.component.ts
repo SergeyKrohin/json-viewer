@@ -45,13 +45,19 @@ export class TreeFieldComponent implements OnChanges {
 	}
 	
 	ngOnChanges(changes: SimpleChanges) {
-		if(changes.nodeFormGroup && changes.nodeFormGroup.currentValue) {
-			//when the type is object, field renders new node
-			if(typeof this.fieldValue !== 'object'){
+		if(changes.fieldValue && changes.fieldValue.currentValue) {
+			//calculate input width only for strings or numbers
+			if(typeof changes.fieldValue.currentValue === 'string' || 
+				typeof changes.fieldValue.currentValue === 'number') {
+				this.calcInputWidth(this.fieldValue);
+			}
+			if(this.nodeFormGroup.get(this.fieldName)) {
+				this.nodeFormGroup.get(this.fieldName).setValue(this.fieldValue, {emitEvent: false});
+			}
+		}
+		if(changes.nodeFormGroup) {
+			if(this.nodeFormGroup && typeof this.fieldValue !== 'object'){
 				this.nodeFormGroup.setControl(this.fieldName, new FormControl(this.fieldValue));
-				if(typeof this.fieldValue === 'string' || typeof this.fieldValue === 'number') {
-					this.calcInputWidth(this.fieldValue);
-				}
 				this.nodeFormGroup.get(this.fieldName).valueChanges.subscribe(val => {
 					this.calcInputWidth(val);
 					this.updateNode(val);

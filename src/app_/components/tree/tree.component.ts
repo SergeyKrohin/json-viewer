@@ -16,7 +16,7 @@ export class TreeComponent implements OnChanges {
 	@Input() treeSource;
 	@Output() onTreeChange = new EventEmitter();
 	
-	public treeFormGroup = new FormGroup({});
+	public treeFormGroup;
 	public utils = UtilitiesService;
 	public formValidated = false;
 
@@ -48,7 +48,7 @@ export class TreeComponent implements OnChanges {
 		return validator;
 	}
 	
-	private setValidators(schema) { // TODO: refactor this function or break it in to smaller parts
+	private setValidators(schema) { // TODO: refactor this function of break it in to smaller parts
 		schema.absControl = {ref: this.treeFormGroup, validators: []};
 		const setGroupValidators = (schema) => {
 			Object.keys(schema).forEach((field, index, list) => {
@@ -88,8 +88,9 @@ export class TreeComponent implements OnChanges {
 			this.setValidators(this.schema);
 			this.formValidated = true;
 		}
-		if(changes.treeSource && changes.treeSource.currentValue) {
+		if(changes.treeSource) {
 			this.treeFormGroup = new FormGroup({});
+			this.treeSource = changes.treeSource.currentValue;
 			if(this.formValidated && this.schema) {
 				//check validation only after the tree finished rendering
 				// TODO - create a notification when the tree finished rendering to not use setTimeout

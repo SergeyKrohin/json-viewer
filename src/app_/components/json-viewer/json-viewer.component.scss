@@ -1,0 +1,78 @@
+$section-margin: 20px;
+$footer-margin: 10px;
+$btn-height: 26px;
+
+.dashboard {
+	padding: 10px 20px;
+	overflow-y: auto;
+	box-sizing: border-box;
+	height: 100%;
+	&:not(.validate-error-message) {
+		font-size: 0; //removes the gap between the sections
+	}
+	section {
+		width: calc(((100% - #{$section-margin * 2}) / 3) - 1px); // 3 sections of wich 2 are with margins ( - 1px because of the IE 11.. )
+		height: calc(100% - #{$btn-height + $footer-margin}); // btn height with footer margin
+		display: inline-block;
+		&.text-view, &.schema-view {
+			margin-right: $section-margin;
+		}
+		&.tree-view {
+			vertical-align: top;
+		}
+	}
+	footer {
+		margin-top: $footer-margin;
+		[class$="error-msg"] {
+			color: coral;
+			line-height: $btn-height;
+			font-size: 14px;
+		}
+		.validate-error-msg {
+			float: right;
+			margin-right: $section-margin;
+			display: none;
+		}
+		.validate-btn {
+			float: right;
+			background: coral;
+			color: white;
+			height: $btn-height;
+			width: 130px;
+		}
+		
+		.validate-btn:disabled {
+			background: #717782;
+			cursor: initial;
+			&:hover {
+				& + .validate-error-msg {
+					display: inline;
+				}
+			}
+		}
+	}
+	@media screen and (max-width: 1080px) {
+		section {
+			&.schema-view {
+				margin-right: 0;
+			}
+			&.text-view, &.schema-view {
+				margin-bottom: $section-margin;
+				width: calc((100% - #{$section-margin}) / 2); // 2 sections of wich 1 is with margin
+			}
+			&.tree-view{
+				width: 100%;
+			}	
+		}
+	}
+	@media screen and (max-width: 720px) {
+		section{
+			&[class$="-view"] {			
+				width: 100%;
+			}
+			&.schema-view, &.text-view {
+				margin-bottom: $section-margin;
+			}
+		}
+	}	
+}

@@ -1,0 +1,27 @@
+@import "../../styles/_section-component.scss";
+
+form {
+	height: 100%;
+	&.ng-valid {
+		header {
+			&.section-header{ 
+				&.form-validated {
+					background: #99ed8a;
+				}
+			}
+		}
+	}
+	&.ng-invalid {
+		header {
+			&.section-header{ 
+				&.form-validated {
+					background: coral;
+				}
+			}
+		}
+	}
+	.tree-node {
+		overflow: auto;
+		@extend .section-component;
+	}
+}

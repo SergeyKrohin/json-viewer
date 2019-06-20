@@ -1,0 +1,11 @@
+<form [formGroup]="treeFormGroup">
+	<header class="section-header clearfix" [ngClass]="{'form-validated': formValidated}">
+		<span class="section-title">{{treeTitle}}</span>
+	</header>
+	<div class="tree-node">
+		<tree-node [parentFormGroup]="treeFormGroup" 
+					*ngIf="treeSource" 
+					[sourceObj]="treeSource" 
+					(onNodeChange)="updateParent($event)"></tree-node>
+	</div>
+</form>

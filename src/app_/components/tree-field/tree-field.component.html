@@ -1,0 +1,26 @@
+<span class="field-name">{{fieldName}} :</span>
+<span style="height: 100%;display: inline-block;" class="test-form-group" [formGroup]="nodeFormGroup">
+	<span class="field" [ngSwitch]="typeOf(fieldValue)">
+
+		<span *ngSwitchCase="'string'">
+			<input type="text" formControlName="{{fieldName}}" [ngStyle]="{'width': fieldWidth + 'px'}"/>
+			<div class="field-error" *ngIf="nodeFormGroup.controls[fieldName].invalid">Invalid field</div>
+		</span>
+		
+		<span *ngSwitchCase="'number'">
+			<input type="number" formControlName="{{fieldName}}" [ngStyle]="{'width': fieldWidth + 'px'}" />
+			<div class="field-error" *ngIf="nodeFormGroup.controls[fieldName].invalid">Invalid field</div>
+		</span>
+		
+		<span *ngSwitchCase="'boolean'">
+			<input formControlName="{{fieldName}}" type="checkbox"/>
+			<div class="field-error" *ngIf="nodeFormGroup.controls[fieldName].invalid">Invalid field</div>
+		</span>
+		
+		<span *ngSwitchCase="'object'">
+			<tree-node  [parentFormGroup]="nodeFormGroup" [sourceObj]="fieldValue" [fieldName]="fieldName" (onNodeChange)="updateNode($event)"></tree-node>
+		</span>
+
+	</span>
+</span>
+

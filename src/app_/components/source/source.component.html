@@ -1,0 +1,5 @@
+<header class="section-header clearfix">
+	<span class="section-title">{{sourceTitle}}</span>
+	<button class="section-btn" (click)="format(jsonSource)" [disabled]="invalidSrc">Format</button>
+</header>
+<textarea class="text-editor" [ngModel]="jsonSource" (ngModelChange)="setSource($event)"></textarea>
