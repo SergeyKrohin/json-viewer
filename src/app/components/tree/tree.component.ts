@@ -48,57 +48,49 @@ export class TreeComponent implements OnChanges {
 		return validator;
 	}
 	
-	private setValidators(schema) { // TODO: refactor this function or break it in to smaller parts
-		schema.absControl = {ref: this.treeFormGroup, validators: []};
-		const setGroupValidators = (schema) => {
-			Object.keys(schema).forEach((field, index, list) => {
-				if(field !== 'absControl'){
-					if(typeof schema[field] === 'object' && field !== 'values') {
-						const controls = schema.absControl.ref.controls;
-						if(!controls || !controls[field]) {
-							console.log('Shema does not mach the source');
-							return;
-						}
-						schema[field].absControl = {ref: controls[field], validators: []};
-						setGroupValidators(schema[field]);
-					} else {
-						let validator = this.getValidator(field, schema[field]);
-						if(validator) {
-							schema.absControl.validators.push(validator);
-						} else if(field === 'readonly'){
-							if(schema[field] === true){
-								schema.absControl.ref.disable({emitEvent: false});
-							} else {
-								schema.absControl.ref.enable({emitEvent: false});
+	private setValidators(formGroup: FormGroup, schema):void {
+		Object.keys(formGroup.controls).forEach(controlKey => {
+			const abstractControl:AbstractControl = formGroup.get(controlKey);
+			const schemaReference = schema[controlKey];
+			if(abstractControl instanceof FormGroup) {
+				this.setValidators(abstractControl, schemaReference);
+			} else {	
+				abstractControl.clearValidators();
+				if(this.utils.getClass(schemaReference) === 'object'){
+					const validators = [];
+					Object.keys(schemaReference).forEach(schemaKey => {
+						if(schemaKey === 'readonly') {
+							schemaReference[schemaKey] === true ? 
+								abstractControl.disable({emitEvent: false}) : 
+								abstractControl.enable({emitEvent: false});
+						} else {							
+							const validator = this.getValidator(schemaKey, schemaReference[schemaKey])
+							if(validator) {
+								validators.push(validator);
 							}
 						}
-					}
-					if(index === list.length-2) {
-						schema.absControl.ref.clearValidators();
-						if(schema.absControl.validators.length) {
-							schema.absControl.ref.setValidators(schema.absControl.validators);
-						}
-						schema.absControl.ref.updateValueAndValidity({emitEvent: false});
-						delete schema.absControl;
+					});					
+					if(validators.length) {
+						abstractControl.setValidators(validators);
 					}
 				}
-			});
-		}
-		setGroupValidators(schema);
+				abstractControl.updateValueAndValidity({emitEvent: false});
+			}
+		});
 	}
 	
 	ngOnChanges(changes: SimpleChanges) {
-		if(changes.schema && changes.schema.currentValue && !changes.schema.firstChange) {
-			this.setValidators(this.schema);
+		if(changes.schema && changes.schema.currentValue) {
+			this.setValidators(this.treeFormGroup, this.schema);
 			this.formValidated = true;
 		}
 		if(changes.treeSource && changes.treeSource.currentValue) {
 			this.treeFormGroup = new FormGroup({});
-			if(this.formValidated && this.schema) {
-				//check validation only after the tree finished rendering
-				// TODO - create a notification when the tree finished rendering to not use setTimeout
-				setTimeout(() => {
-					this.setValidators(this.schema);
+			if(this.formValidated) {
+				// temporary solution to wait untill the form group structure is set
+				// TODO - use notification - formStructureIsSet instead of timeout
+				setTimeout(() => {// TODO - create notificationchange this to 
+					this.setValidators(this.treeFormGroup, this.schema);
 				});
 			}
 		}
