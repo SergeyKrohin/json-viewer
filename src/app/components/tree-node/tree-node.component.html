@@ -1,12 +1,11 @@
 <div class="tree-node">
 	<toggle-box (onToggle)="toggleNode($event)"></toggle-box> 
 	<span class="{{utils.getClass(sourceObj)}}-length">{{fields.length}}</span>
-	<span *ngIf="showFields">	
-		<div class="field-wrapper" *ngFor="let field of fields" >
-			<tree-field [nodeFormGroup]="parentFormGroup.controls[fieldName] || parentFormGroup" 
-						[fieldName]="field" 
-						[fieldValue]="sourceObj[field]" 
-						(onFieldChange)="updateTree($event)"></tree-field>
-		</div>
-	</span>
+	<div class="field-wrapper" [ngClass]="showFields ? 'visible' : 'hidden'" *ngFor="let field of fields" >
+		<tree-field [nodeFormGroup]="parentFormGroup.controls[fieldName] || parentFormGroup" 
+					[fieldName]="field" 
+					[fieldValue]="sourceObj[field]" 
+					(onFieldChange)="updateTree($event)"></tree-field>
+	</div>
 </div>
+
