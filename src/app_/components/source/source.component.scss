@@ -1,9 +1,0 @@
-@import "../../styles/_section-component.scss";
-
-.text-editor {
-	width: 100%;
-	outline: none;
-	resize: none;
-	line-height: 20px;
-	@extend .section-component;
-}

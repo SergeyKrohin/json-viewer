@@ -40,7 +40,7 @@ export class TreeComponent implements OnChanges {
 				validator = Validators.max(propVal);
 			break;
 			case 'values':
-				validator = ContainedInList(propVal);
+				validator = Array.isArray(propVal) ? ContainedInList(propVal) : null;
 			break;
 			default:
 				validator = null;
@@ -53,7 +53,7 @@ export class TreeComponent implements OnChanges {
 		const setGroupValidators = (schema) => {
 			Object.keys(schema).forEach((field, index, list) => {
 				if(field !== 'absControl'){
-					if(this.utils.getClass(schema[field]) === 'object') {
+					if(typeof schema[field] === 'object' && field !== 'values') {
 						const controls = schema.absControl.ref.controls;
 						if(!controls || !controls[field]) {
 							console.log('Shema does not mach the source');
@@ -73,9 +73,13 @@ export class TreeComponent implements OnChanges {
 							}
 						}
 					}
-					if(index === list.length-2 && schema.absControl.validators.length) {
-						schema.absControl.ref.setValidators(schema.absControl.validators);
-						schema.absControl.ref.updateValueAndValidity({emitEvent: false})
+					if(index === list.length-2) {
+						schema.absControl.ref.clearValidators();
+						if(schema.absControl.validators.length) {
+							schema.absControl.ref.setValidators(schema.absControl.validators);
+						}
+						schema.absControl.ref.updateValueAndValidity({emitEvent: false});
+						delete schema.absControl;
 					}
 				}
 			});
