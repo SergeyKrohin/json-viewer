@@ -12,12 +12,16 @@
 	</span>
 	
 	<span *ngSwitchCase="'boolean'">
-		<input formControlName="{{fieldName}}" type="checkbox"/>
+		<input type="checkbox" formControlName="{{fieldName}}"/>
 		<div class="field-error" *ngIf="nodeFormGroup.controls[fieldName].invalid">Invalid field</div>
 	</span>
 	
 	<span *ngSwitchCase="'object'">
-		<tree-node  [parentFormGroup]="nodeFormGroup" [sourceObj]="fieldValue" [fieldName]="fieldName" (onNodeChange)="updateNode($event)"></tree-node>
+		<tree-node  
+			[parentFormGroup]="nodeFormGroup"
+			[sourceObj]="fieldValue" 
+			[fieldName]="fieldName" 
+			(onNodeChange)="updateNode($event)"></tree-node>
 	</span>
 
 </span>

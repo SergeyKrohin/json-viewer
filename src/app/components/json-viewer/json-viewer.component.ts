@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { IErrors } from './json-viewer';
+import { TreeComponent } from '../tree/tree.component';
 
 @Component({
 	selector: 'json-viewer',
@@ -9,8 +10,10 @@ import { IErrors } from './json-viewer';
 
 export class JsonViewerComponent {
 	
+	 @ViewChild(TreeComponent) tree;
+	
 	public treeSrc: object = null;
-	public treeSchema: object = null;
+	public treeSchema: object = {};
 	public jsonSrc: string = '';
 	public validateBtnText: string = 'Start validation';	
 	public validateTree: boolean = false;
@@ -24,7 +27,7 @@ export class JsonViewerComponent {
 	}
 	
 	public setTreeSrc(src: string) {
-		try {			
+		try {	
 			this.treeSrc = src ? JSON.parse(src) : null;
 			this.errors.source = '';
 		} catch(e) {
@@ -34,7 +37,7 @@ export class JsonViewerComponent {
 	
 	public setSchema(src: string) {
 		try {
-			this.treeSchema = src ? JSON.parse(src) : null;
+			this.treeSchema = src ? JSON.parse(src) : {};
 			this.errors.schema = '';
 		} catch(e) {
 			this.errors.schema = 'schema';
@@ -49,6 +52,7 @@ export class JsonViewerComponent {
 	public validate() {
 		this.validateTree = true;
 		this.validateBtnText = 'Validating';
+		this.tree.setValidated();
 	}
 	
 }

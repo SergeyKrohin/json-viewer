@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import UtilitiesService from '../../services/utilities.service';
 import { NG_VALUE_ACCESSOR, FormGroup,ControlContainer, FormGroupDirective } from '@angular/forms';
 
@@ -8,7 +8,7 @@ import { NG_VALUE_ACCESSOR, FormGroup,ControlContainer, FormGroupDirective } fro
 	styleUrls: ['./tree-node.component.scss']
 })
 
-export class TreeNodeComponent implements OnChanges {
+export class TreeNodeComponent implements OnInit, OnChanges {
 	
 	@Input() fieldName;
 	@Input() parentFormGroup;
@@ -30,17 +30,16 @@ export class TreeNodeComponent implements OnChanges {
 
 	ngOnChanges(changes: SimpleChanges) {
 		if(changes.sourceObj && changes.sourceObj.currentValue) {
-			const newFields = Object.keys(changes.sourceObj.currentValue);
-			if(newFields.length !== this.fields.length) {
-				this.fields = newFields;
-			}
-		}
-		if(changes.parentFormGroup && changes.parentFormGroup.currentValue){	
-			// it there is no field name, it meant that it is the root node
-			if(this.fieldName) {
-				this.parentFormGroup.addControl(this.fieldName, new FormGroup({}));
-			}
+			this.fields = Object.keys(changes.sourceObj.currentValue);
 		}
 	}
+	
+	ngOnInit() {
+		// it there is no field name, it means that it is the root node
+		if(this.fieldName) {
+			this.parentFormGroup.setControl(this.fieldName, new FormGroup({}));
+		}
+	}
+	
 	
 }

@@ -1,5 +1,5 @@
-import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges, forwardRef } from '@angular/core';
-import { FormControl,NgForm, ControlContainer, FormGroupDirective } from '@angular/forms';
+import { Component, Input, Output, EventEmitter, OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
 	selector: 'tree-field',
@@ -7,13 +7,14 @@ import { FormControl,NgForm, ControlContainer, FormGroupDirective } from '@angul
 	styleUrls: ['./tree-field.component.scss']
 })
 
-export class TreeFieldComponent implements OnChanges {
+export class TreeFieldComponent implements OnChanges, OnDestroy {
 	
 	@Input() nodeFormGroup;
 	@Input() fieldName;
 	@Input() fieldValue;
 	@Output() onFieldChange = new EventEmitter();
 
+	private valChangeSub;
 	public fieldWidth;
 	
 	public typeOf(field) {
@@ -43,20 +44,49 @@ export class TreeFieldComponent implements OnChanges {
 			value: val
 		});	
 	}
+
+	private onValueChange(val) {
+		if(typeof this.fieldValue !== 'boolean') {
+			this.calcInputWidth(val);
+		}
+		this.updateNode(val);
+	}
 	
+	private setNewControl() {
+		this.nodeFormGroup.setControl(this.fieldName, new FormControl(this.fieldValue));
+		this.valChangeSub = this.nodeFormGroup.get(this.fieldName).valueChanges.subscribe(val => {
+			this.onValueChange(val);
+		});
+		if(typeof this.fieldValue !== 'boolean') {
+			this.calcInputWidth(this.fieldValue);
+		}
+	}
+
+	private setControlVal() {
+		this.nodeFormGroup.get(this.fieldName).setValue(this.fieldValue, {emitEvent:false});
+		if(typeof this.fieldValue !== 'boolean') {
+			this.calcInputWidth(this.fieldValue);
+		}
+	}
+
 	ngOnChanges(changes: SimpleChanges) {
-		if(changes.nodeFormGroup && changes.nodeFormGroup.currentValue) {
+		if(changes.fieldValue) {
 			//when the type is object, field renders new node
-			if(typeof this.fieldValue !== 'object'){
-				this.nodeFormGroup.setControl(this.fieldName, new FormControl(this.fieldValue));
-				if(typeof this.fieldValue === 'string' || typeof this.fieldValue === 'number') {
-					this.calcInputWidth(this.fieldValue);
+			if(typeof changes.fieldValue.currentValue !== 'object') {
+				// create new control on init or in case the form group was removed
+				if(changes.fieldValue.firstChange || typeof changes.fieldValue.previousValue === 'object') {
+					this.setNewControl();
+				} else {
+					this.setControlVal();
 				}
-				this.nodeFormGroup.get(this.fieldName).valueChanges.subscribe(val => {
-					this.calcInputWidth(val);
-					this.updateNode(val);
-				});
 			}
+		}
+	}
+	
+	ngOnDestroy() {
+		this.nodeFormGroup.removeControl(this.fieldName);
+		if(this.valChangeSub) {
+			this.valChangeSub.unsubscribe();
 		}
 	}
 

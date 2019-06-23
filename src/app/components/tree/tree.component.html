@@ -3,9 +3,10 @@
 		<span class="section-title">{{treeTitle}}</span>
 	</header>
 	<div class="tree-node">
-		<tree-node [parentFormGroup]="treeFormGroup" 
-					*ngIf="treeSource" 
-					[sourceObj]="treeSource" 
-					(onNodeChange)="updateParent($event)"></tree-node>
+		<tree-node 
+			[parentFormGroup]="treeFormGroup" 
+			[sourceObj]="treeSource" 
+			*ngIf="treeSource" 
+			(onNodeChange)="updateParent($event)"></tree-node>
 	</div>
 </form>
