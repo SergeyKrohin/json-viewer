@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
+import { Component, Input, Output, EventEmitter, SimpleChanges, ChangeDetectorRef } from '@angular/core';
 import { FormGroup, FormControl, Validators,FormBuilder, AbstractControl } from '@angular/forms';
 import { ContainedInList } from '../../validators/contained-in-list.validator';
 import UtilitiesService from '../../services/utilities.service';
@@ -10,12 +10,15 @@ import UtilitiesService from '../../services/utilities.service';
 })
 
 export class TreeComponent {
+	
+	constructor(private cdRef: ChangeDetectorRef) {}
 
 	@Input() schema;
 	@Input() treeTitle;
 	@Input() treeSource;
 	@Output() onTreeChange = new EventEmitter();
 	
+	private checkValidity = false;
 	public treeFormGroup = new FormGroup({});
 	public utils = UtilitiesService;
 	public formValidated = false;
@@ -98,10 +101,16 @@ export class TreeComponent {
 		}
 		if(changes.treeSource && changes.treeSource.currentValue) {
 			if(this.formValidated) {
-				setTimeout(() => {// TODO - replace timeout with notification, when tree finishes rendering
-					this.validateTree(this.treeFormGroup, this.schema);
-				});
+				this.checkValidity = true;
 			}
+		}
+	}
+	
+	ngAfterViewChecked() {
+		if(this.checkValidity) {
+			this.validateTree(this.treeFormGroup, this.schema);
+			this.cdRef.detectChanges();
+			this.checkValidity = false;
 		}
 	}
 	
