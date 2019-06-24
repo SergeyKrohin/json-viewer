@@ -18,7 +18,7 @@ export class TreeComponent {
 	@Input() treeSource;
 	@Output() onTreeChange = new EventEmitter();
 	
-	private checkValidity = false;
+	private treeSourceChanged = false;
 	public treeFormGroup = new FormGroup({});
 	public utils = UtilitiesService;
 	public formValidated = false;
@@ -101,16 +101,17 @@ export class TreeComponent {
 		}
 		if(changes.treeSource && changes.treeSource.currentValue) {
 			if(this.formValidated) {
-				this.checkValidity = true;
+				// use this flag inside after view checked hook to run the validation
+				this.treeSourceChanged = true;
 			}
 		}
 	}
 	
 	ngAfterViewChecked() {
-		if(this.checkValidity) {
+		if(this.treeSourceChanged) {
 			this.validateTree(this.treeFormGroup, this.schema);
-			this.cdRef.detectChanges();
-			this.checkValidity = false;
+			this.cdRef.detectChanges(); // work around - ExpressionChangedAfterItHasBeenCheckedError
+			this.treeSourceChanged = false;
 		}
 	}
 	
